@@ -11,6 +11,10 @@ export const metadata: Metadata = {
   title: "Mr. Transfer Lab | The Origin of Every Tattoo",
   description: "Papel hectográfico premium para tatuadores. Conviértete en distribuidor oficial de Mr. Transfer Lab.",
   generator: 'v0.app',
+  icons: {
+    icon: "/favicon.png",
+    apple: "/apple-icon.png",
+  },
 }
 
 export default function RootLayout({
