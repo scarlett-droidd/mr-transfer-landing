@@ -7,7 +7,6 @@ import { motion, AnimatePresence, useInView } from "framer-motion"
 
 export interface SponsorImage {
   url: string
-  country: string
   artist: string
 }
 
@@ -58,14 +57,15 @@ export function SponsorCarousel({ images }: SponsorCarouselProps) {
 
   const img = images[current]
   const nextImg = images[(current + 1) % images.length]
+  const prevImg = images[(current - 1 + images.length) % images.length]
 
   // Play animation only when in view, if the user hasn't clicked anything yet, and we are on the first slide
   const shouldNudge = isInView && !hasInteracted && current === 0
 
   return (
     <div className="flex flex-col gap-3 h-full" ref={containerRef}>
-      {/* Image area — portrait aspect ratio, contain so nothing is cropped */}
-      <div className="relative overflow-hidden rounded-2xl bg-black/60 border border-border/50" style={{ aspectRatio: "3/4" }}>
+      {/* Image area — full width with max height, internal layers handle the aspect ratio */}
+      <div className="relative overflow-hidden rounded-2xl border border-border/50 w-full" style={{ height: "min(75vh, 700px)" }}>
 
         {/* Loading skeleton */}
         {!isLoaded && (
@@ -81,33 +81,57 @@ export function SponsorCarousel({ images }: SponsorCarouselProps) {
           <AnimatePresence mode="wait">
             <motion.div
               key={img.url}
-              className="absolute inset-0 flex items-center justify-center"
+              className="absolute inset-0"
               initial={{ opacity: 0 }}
               animate={{ opacity: isLoaded ? 1 : 0 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.35 }}
             >
+              {/* Capa de fondo: la misma imagen, ampliada y difuminada, cubre TODO el ancho */}
               <Image
                 src={img.url}
-                alt={`${img.artist} — ${img.country}`}
+                alt=""
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"
-                className="object-contain"
-                priority={current === 0}
-                onLoad={() => setIsLoaded(true)}
+                className="object-cover scale-110 opacity-60"
+                style={{ filter: "blur(10px)" }}
+                aria-hidden="true"
               />
+              <div className="absolute inset-0 bg-black/20" />
+
+              {/* Capa nítida: la imagen REAL en su proporción 9:16 exacta, centrada, sin estirar */}
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="relative h-full" style={{ aspectRatio: "9/16" }}>
+                  <Image
+                    src={img.url}
+                    alt={`${img.artist}`}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    className="object-cover"
+                    priority={current === 0}
+                    onLoad={() => setIsLoaded(true)}
+                  />
+                </div>
+              </div>
             </motion.div>
           </AnimatePresence>
         </motion.div>
 
-        {/* Silent preload of next image */}
+        {/* Silent preload of next and prev image */}
         <div className="hidden" aria-hidden>
           <Image
             src={nextImg.url}
             alt=""
             fill
             sizes="(max-width: 768px) 100vw, 50vw"
-            className="object-contain opacity-0 pointer-events-none"
+            className="object-cover opacity-0 pointer-events-none"
+          />
+          <Image
+            src={prevImg.url}
+            alt=""
+            fill
+            sizes="(max-width: 768px) 100vw, 50vw"
+            className="object-cover opacity-0 pointer-events-none"
           />
         </div>
 
@@ -148,11 +172,10 @@ export function SponsorCarousel({ images }: SponsorCarouselProps) {
         </div>
       </div>
 
-      {/* Country + artist — outside the image, always fully visible */}
+      {/* Artist — outside the image, always fully visible */}
       <div className="flex items-center justify-between px-1">
         <div>
-          <p className="text-foreground font-bold text-sm tracking-widest uppercase">{img.country}</p>
-          <p className="text-muted-foreground text-xs">@{img.artist}</p>
+          <p className="text-foreground font-bold text-sm tracking-widest uppercase">{img.artist}</p>
         </div>
         <p className="text-muted-foreground text-xs">
           {current + 1} / {images.length}
@@ -161,7 +184,7 @@ export function SponsorCarousel({ images }: SponsorCarouselProps) {
 
       {/* Caption / legend */}
       <p className="text-muted-foreground text-sm leading-relaxed italic border-l-2 border-primary/50 pl-4">
-        Mr. Hyde trabaja con un Pro Team de tatuadores referentes en la industria en distintos países,
+        Mr. Transfer Lab trabaja con un Pro Team de tatuadores referentes en la industria en distintos países,
         y sigue sumando talento de este calibre para posicionar aún más la marca.
       </p>
     </div>

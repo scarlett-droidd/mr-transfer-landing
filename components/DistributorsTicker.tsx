@@ -2,30 +2,96 @@
 
 /**
  * DistributorsTicker
- * Cinta turquesa que se desliza continuamente mostrando los logos
- * de los distribuidores que trabajan con Mr. Hyde.
+ * Cinta púrpura que se desliza continuamente mostrando los logos
+ * de los distribuidores que trabajan con Mr. Transfer Lab.
  *
- * No requiere librerías externas — usa CSS puro (styled-jsx, incluido en Next.js).
+ * Usa inline styles para máxima compatibilidad (sin depender de styled-jsx).
  */
+
+import { CSSProperties } from "react";
 
 type Distributor = {
   name: string;
-  logoUrl?: string; // si no hay logo, se muestra el nombre en texto
+  logoUrl?: string;
   scale?: number;
 };
 
 type Props = {
   distributors?: Distributor[];
-  speedSeconds?: number; // qué tan rápido se desliza (menor = más rápido)
+  speedSeconds?: number;
 };
 
 const DEFAULT_DISTRIBUTORS: Distributor[] = [
-  { name: "Distribuidor 1" },
-  { name: "Distribuidor 2" },
-  { name: "Distribuidor 3" },
-  { name: "Distribuidor 4" },
-  { name: "Distribuidor 5" },
+  { name: "@bluesupply.cr", logoUrl: "/logos-distribuidores/bluesupplycr.png" },
+  { name: "@kedavratattoosupply", logoUrl: "/logos-distribuidores/kedavratattoosupply.png" },
+  { name: "@etertattoo.supplies", logoUrl: "/logos-distribuidores/etertattoosupplies.png" },
+  { name: "@perutattoosupply", logoUrl: "/logos-distribuidores/perutattoosupply.png" },
+  { name: "@balitattoosupplay", logoUrl: "/logos-distribuidores/balitattoosupplay.png" },
+  { name: "@underground_tattoosupply", logoUrl: "/logos-distribuidores/underground_tattoosupply.png", scale: 1.4 },
+  { name: "@tattoosupplypanama", logoUrl: "/logos-distribuidores/tattoosupplypanama.png" },
+  { name: "@brasitattoosupply", logoUrl: "/logos-distribuidores/brasitattoosupply.png" },
+  { name: "@bloodsupply_tattoo", logoUrl: "/logos-distribuidores/bloodsupply_tattoo.png" },
+  { name: "@evolutiontattoo_insumos", logoUrl: "/logos-distribuidores/evolutiontattoo_insumos.png", scale: 1.7 },
+  { name: "@recina_tattoo", logoUrl: "/logos-distribuidores/recina_tattoo.png", scale: 1.4 },
+  { name: "@newtechtattoosupplies", logoUrl: "/logos-distribuidores/newtechtattoosupplies.png", scale: 1.4 },
+  { name: "@hinaltattoosupply", logoUrl: "/logos-distribuidores/hinaltattoosupply.png?v=2", scale: 2.1 },
+  { name: "@wizardtsltd", logoUrl: "/logos-distribuidores/wizardtsltd.png" },
+  { name: "@hindi.tattoo.supply.lebanon", logoUrl: "/logos-distribuidores/hinditattoosupplylebanon.png" },
+  { name: "@lp_tattoo_supply", logoUrl: "/logos-distribuidores/lp_tattoo_supply.png" },
 ];
+
+const wrapperStyle: CSSProperties = {
+  width: "100%",
+  overflow: "hidden",
+  backgroundColor: "#5B3A6E",
+  transform: "skewY(-2deg)",
+  height: "120px",
+  padding: "0",
+  boxShadow: "0 4px 20px rgba(0, 0, 0, 0.25)",
+};
+
+const trackStyle = (speed: number): CSSProperties => ({
+  display: "flex",
+  alignItems: "center",
+  gap: "48px",
+  width: "max-content",
+  height: "100%",
+  animation: `ticker-scroll ${speed}s linear infinite`,
+});
+
+const itemStyle: CSSProperties = {
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  minWidth: "180px",
+  height: "100%",
+  transform: "skewY(2deg)",
+};
+
+const logoWrapperStyle: CSSProperties = {
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  height: "100%",
+};
+
+const logoStyle: CSSProperties = {
+  height: "110px",
+  maxHeight: "110px",
+  width: "auto",
+  maxWidth: "180px",
+  objectFit: "contain",
+  display: "block",
+  filter: "drop-shadow(0 1px 4px rgba(255, 255, 255, 0.35))",
+};
+
+const nameStyle: CSSProperties = {
+  color: "#ffffff",
+  fontWeight: 700,
+  fontSize: "18px",
+  letterSpacing: "0.5px",
+  whiteSpace: "nowrap",
+};
 
 export default function DistributorsTicker({
   distributors = DEFAULT_DISTRIBUTORS,
@@ -35,84 +101,37 @@ export default function DistributorsTicker({
   const items = [...distributors, ...distributors];
 
   return (
-    <div className="ticker-wrapper">
-      <div className="ticker-track" style={{ animationDuration: `${speedSeconds}s` }}>
-        {items.map((d, i) => (
-          <div className="ticker-item" key={i}>
-            {d.logoUrl ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img src={d.logoUrl} alt={d.name} className="ticker-logo" style={{ transform: d.scale ? `scale(${d.scale})` : undefined }} />
-            ) : (
-              <span className="ticker-name">{d.name}</span>
-            )}
-          </div>
-        ))}
-      </div>
-
-      <style jsx>{`
-        .ticker-wrapper {
-          width: 100%;
-          overflow: hidden;
-          background-color: #5da58f; /* turquesa oficial de marca */
-          background-image: url('/texturas/comic-turquesa.png');
-          background-repeat: repeat;
-          background-size: auto; /* o el tamaño que prefieras para la textura */
-          transform: skewY(-2deg);
-          padding: 0px 0;
-          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
-        }
-
-        .ticker-track {
-          display: flex;
-          align-items: center;
-          gap: 96px;
-          width: max-content;
-          animation-name: scroll;
-          animation-timing-function: linear;
-          animation-iteration-count: infinite;
-        }
-
-        .ticker-item {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          min-width: 250px;
-          transform: skewY(2deg); /* corrige la inclinación para que el logo quede recto */
-          mix-blend-mode: multiply;
-        }
-
-        .ticker-logo {
-          height: 145px;
-          width: auto;
-          object-fit: contain;
-        }
-
-        .ticker-name {
-          color: #ffffff;
-          font-weight: 700;
-          font-size: 20px;
-          letter-spacing: 0.5px;
-          white-space: nowrap;
-        }
-
-        @keyframes scroll {
-          from {
-            transform: translateX(0);
-          }
-          to {
-            transform: translateX(-50%);
-          }
-        }
-
-        @media (max-width: 480px) {
-          .ticker-item {
-            min-width: 45vw;
-          }
-          .ticker-track {
-            gap: 48px;
-          }
+    <>
+      <style>{`
+        @keyframes ticker-scroll {
+          from { transform: translateX(0); }
+          to { transform: translateX(-50%); }
         }
       `}</style>
-    </div>
+      <div style={wrapperStyle}>
+        <div style={trackStyle(speedSeconds)}>
+          {items.map((d, i) => (
+            <div style={itemStyle} key={i}>
+              {d.logoUrl ? (
+                <div style={logoWrapperStyle}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={d.logoUrl}
+                    alt={d.name}
+                    style={{
+                      ...logoStyle,
+                      transform: d.scale ? `scale(${d.scale})` : undefined,
+                    }}
+                    loading="eager"
+                  />
+                </div>
+              ) : (
+                <span style={nameStyle}>{d.name}</span>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    </>
   );
 }

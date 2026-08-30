@@ -16,7 +16,7 @@ export function AnimatedText({ text, delay = 0 }: AnimatedTextProps) {
       className="inline-block"
       initial="hidden"
       animate="visible"
-      style={{ perspective: 400, display: "inline-block" }}
+      style={{ display: "inline-block" }}
     >
       {words.map((word, wordIndex) => (
         <span key={wordIndex} style={{ display: "inline-block", whiteSpace: "nowrap" }}>
@@ -25,17 +25,15 @@ export function AnimatedText({ text, delay = 0 }: AnimatedTextProps) {
             return (
               <motion.span
                 key={index}
-                initial={{ opacity: 0, y: 30, filter: "blur(12px)", rotateX: -45 }}
-                animate={{ opacity: 1, y: 0, filter: "blur(0px)", rotateX: 0 }}
+                initial={{ opacity: 0, filter: "blur(12px)" }}
+                animate={{ opacity: 1, filter: "blur(0px)" }}
                 transition={{
                   duration: 0.6,
                   delay: delay + currentIndex * 0.04,
                   ease: [0.25, 0.46, 0.45, 0.94],
                 }}
                 style={{
-                  display: "inline-block",
-                  transformStyle: "preserve-3d",
-                  transformOrigin: "center bottom",
+                  display: "inline",
                 }}
               >
                 {char}

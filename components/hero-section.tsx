@@ -1,7 +1,8 @@
 "use client"
 import { useEffect, useState } from "react"
 import { AnimatedText } from "./animated-text"
-import PurpleVeinBackground from "./PurpleVeinBackground"
+import LabCircuitBackground from "./LabCircuitBackground"
+import { ArrowRight } from "lucide-react"
 
 export function HeroSection() {
   const [isVisible, setIsVisible] = useState(false)
@@ -64,7 +65,7 @@ export function HeroSection() {
           }}
         >
           <div className="absolute inset-0">
-            <PurpleVeinBackground />
+            <LabCircuitBackground className="absolute inset-0 -z-10" />
             <div className="absolute inset-0 bg-black/50 pointer-events-none" />
           </div>
         </div>
@@ -79,10 +80,10 @@ export function HeroSection() {
         }}
       >
         <span
-          className="block text-primary/20 font-serif font-bold text-[22vw] sm:text-[20vw] md:text-[18vw] lg:text-[16vw] tracking-tighter select-none text-center leading-none"
+          className="block text-primary/20 font-serif font-bold text-[16vw] sm:text-[14vw] md:text-[12vw] lg:text-[10vw] tracking-tighter select-none text-center leading-none"
           style={{ marginBottom: "0", textShadow: "0px 10px 20px rgba(0,0,0,0.5)" }}
         >
-          MR HYDE
+          MR TRANSFER LAB
         </span>
       </div>
 
@@ -91,20 +92,27 @@ export function HeroSection() {
           <div
             className={`transition-all duration-1000 delay-[800ms] ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"}`}
           >
-            <h1 className="font-serif text-accent text-[3rem] sm:text-[4rem] md:text-[4.5rem] lg:text-[5.5rem] xl:text-[6.5rem] 2xl:text-[7.5rem] font-normal leading-tight mb-6 w-full px-4 max-w-6xl mx-auto text-balance">
-              <AnimatedText text="Rendimiento implacable, precisión absoluta." delay={0.3} />
+            <h1 className="text-metal-gold text-[3rem] sm:text-[4rem] md:text-[4.5rem] lg:text-[5.5rem] xl:text-[6.5rem] 2xl:text-[7.5rem] leading-tight mb-4 w-full px-4 max-w-6xl mx-auto text-balance">
+              <AnimatedText text="The Origin of Every Tattoo" delay={0.3} />
             </h1>
+            <p className="text-muted-foreground text-xl md:text-2xl mt-4 font-light max-w-3xl mx-auto mb-8">
+              From Sketch to Skin. Without Mistakes.<br />
+              <span className="text-lg opacity-80 mt-2 block">Del boceto a la piel, sin errores.</span>
+            </p>
+            <a href="#contact" className="px-8 py-4 btn-gold font-semibold rounded-xl transition-colors inline-flex items-center gap-2 cursor-pointer relative z-20">
+              Conviértete en distribuidor <ArrowRight className="w-5 h-5" />
+            </a>
           </div>
         </div>
 
         <div className="flex flex-col items-center justify-center gap-8">
-          <div className="relative">
+          <div className="relative pointer-events-none">
             <div
               className={`relative w-[320px] md:w-[420px] lg:w-[550px] will-change-transform transition-all duration-[1500ms] ease-out delay-500 ${
                 isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-[400px]"
               }`}
             >
-              <img src="/images/herofinal.svg" alt="Mr Hyde Tattoo Cartridges" className="w-full h-auto relative z-10 drop-shadow-[0_25px_25px_rgba(143,190,46,0.4)] brightness-125 saturate-110 contrast-110" />
+              <img src="/images/hero.svg" alt="Mr Transfer Lab Cartridges Placeholder" className="w-full h-auto relative z-10" style={{ filter: "drop-shadow(0 0 15px rgba(143,217,196,0.8)) drop-shadow(0 0 45px rgba(143,217,196,0.4))" }} />
             </div>
           </div>
         </div>
