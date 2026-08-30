@@ -141,6 +141,15 @@ html {
     paint-order: stroke fill;
   }
 
+  /* Ensure gradient inheritance on iOS Safari for nested spans */
+  .text-metal-gold span,
+  .text-metal-gold span span {
+    background: inherit;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
   .text-metal-solid {
     font-family: "Big Shoulders", sans-serif;
     font-weight: 900;
