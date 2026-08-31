@@ -4,8 +4,6 @@ import { AnimatedText } from "./animated-text"
 import LabCircuitBackground from "./LabCircuitBackground"
 import { ArrowRight } from "lucide-react"
 import { useLanguage } from "@/context/language-context"
-import { LanguageSwitch } from "./language-switch"
-
 export function HeroSection() {
   const { language, t } = useLanguage()
   const [isVisible, setIsVisible] = useState(false)
@@ -91,9 +89,6 @@ export function HeroSection() {
       </div>
 
       <div className="max-w-7xl mx-auto w-full relative z-10">
-        <div className="flex justify-center mb-12">
-          <LanguageSwitch />
-        </div>
         <div className="text-center mb-12">
           <div
             className={`transition-all duration-1000 delay-[800ms] ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"}`}

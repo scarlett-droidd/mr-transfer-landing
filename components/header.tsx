@@ -36,7 +36,7 @@ export function Header() {
   }
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 transition-all duration-300 px-4 pt-4">
+    <header className="relative w-full transition-all duration-300 px-4 pt-4">
       <div className="max-w-7xl mx-auto transition-all duration-300 rounded-2xl bg-background/90 backdrop-blur-md border border-border px-6 py-4">
         <div className="flex items-center justify-between">
           <a href="#" onClick={handleLogoClick} className="flex items-center gap-2 cursor-pointer">

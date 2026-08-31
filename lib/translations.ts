@@ -95,9 +95,6 @@ export const translations = {
         details: "Cuéntanos un poco sobre tu operación...",
       },
       submitButton: "Solicitar información",
-      whatsappButton: "Contactar por WhatsApp",
-      whatsappMessage: (nombre: string, empresa: string, detalles: string, email: string) =>
-        `Hola, mi nombre es ${nombre || "[nombre]"}${empresa ? ` de ${empresa}` : ""}. Me interesa distribuir MR. Transfer Lab.${detalles ? `\n\nDetalles: ${detalles}` : ""}${email ? `\n\nCorreo: ${email}` : ""}`,
     },
     footer: {
       description: "Papel hectográfico premium diseñado para transferencias limpias y precisas.",
@@ -217,9 +214,6 @@ export const translations = {
         details: "Tell us a bit about your operation...",
       },
       submitButton: "Request Information",
-      whatsappButton: "Contact via WhatsApp",
-      whatsappMessage: (nombre: string, empresa: string, detalles: string, email: string) =>
-        `Hi, my name is ${nombre || "[name]"}${empresa ? ` from ${empresa}` : ""}. I'm interested in distributing MR. Transfer Lab.${detalles ? `\n\nDetails: ${detalles}` : ""}${email ? `\n\nEmail: ${email}` : ""}`,
     },
     footer: {
       description: "Premium hectographic stencil paper, built for clean, precise transfers.",
