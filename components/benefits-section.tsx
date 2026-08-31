@@ -3,46 +3,19 @@ import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { List, X, Plus } from "lucide-react"
 import LabFrameFixedCorners from "./LabFrameFixedCorners"
-
-const benefits = [
-  {
-    id: 1,
-    title: "Transferencia clara y precisa",
-    description: "Líneas y detalles se transfieren con máxima nitidez, manteniendo la fidelidad del diseño original incluso en los trazos más finos.",
-    x: 28,
-    y: 18,
-  },
-  {
-    id: 2,
-    title: "Adherencia limpia, sin manchado",
-    description: "El diseño se mantiene firme sobre la piel durante toda la sesión, con una transferencia pareja que reduce el riesgo de manchado o errores.",
-    x: 68,
-    y: 30,
-  },
-  {
-    id: 3,
-    title: "Consistencia entre hojas",
-    description: "Cada hoja de la caja ofrece el mismo resultado, sin variaciones de calidad entre unidades.",
-    x: 25,
-    y: 50,
-  },
-  {
-    id: 4,
-    title: "Formato profesional, compatible con todo",
-    description: "Formato Letter (8.5\" × 11\" — 21.6 × 27.9 cm), compatible con impresoras térmicas y transferencia manual. Listo para uso profesional de tatuaje, sin curva de aprendizaje.",
-    x: 68,
-    y: 68,
-  },
-  {
-    id: 5,
-    title: "Rendimiento pensado para tu estudio",
-    description: "100 hojas por caja y 10 cajas por case (1.000 hojas en total) — el respaldo de stock que un estudio o distribuidor necesita para no quedarse corto.",
-    x: 35,
-    y: 88,
-  },
-]
+import { useLanguage } from "@/context/language-context"
 
 export function BenefitsSection() {
+  const { t } = useLanguage()
+
+  const benefits = t.benefits.items.map((item, i) => ({
+    id: i + 1,
+    title: item.title,
+    description: item.description,
+    x: [28, 68, 25, 68, 35][i],
+    y: [18, 30, 50, 68, 88][i],
+  }))
+
   const [activeSpot, setActiveSpot] = useState<number | null>(0)
   const [viewMode, setViewMode] = useState<"hotspots" | "list">("hotspots")
   
@@ -51,7 +24,7 @@ export function BenefitsSection() {
       {/* Background Text */}
       <div className="absolute top-1/2 -translate-y-1/2 left-0 right-0 flex justify-center pointer-events-none z-0 opacity-5">
         <span className="font-serif font-bold text-center text-[15vw] sm:text-[15vw] leading-none tracking-tighter text-primary whitespace-nowrap">
-          EL PRODUCTO
+          {t.benefits.bgText}
         </span>
       </div>
       
@@ -61,10 +34,10 @@ export function BenefitsSection() {
           <LabFrameFixedCorners className="absolute inset-1 md:inset-2 z-0" color="#3B2A47" cornerSize={36} />
           <div className="relative z-10 max-w-2xl">
             <h2 className="text-4xl md:text-5xl font-heading uppercase tracking-wide text-metal-gold mb-4 text-balance">
-              El Producto
+              {t.benefits.title}
             </h2>
             <p className="text-muted-foreground leading-relaxed text-lg">
-              Explora por qué MR. Transfer Lab es la herramienta que tus artistas van a preferir usar.
+              {t.benefits.subtitle}
             </p>
           </div>
           <div className="relative z-10 shrink-0">
@@ -75,12 +48,12 @@ export function BenefitsSection() {
               {viewMode === "hotspots" ? (
                 <>
                   <List className="w-4 h-4" />
-                  Ver lista completa
+                  {t.benefits.listButton}
                 </>
               ) : (
                 <>
                   <X className="w-4 h-4" />
-                  Cerrar lista
+                  {t.benefits.closeButton}
                 </>
               )}
             </button>
@@ -102,7 +75,7 @@ export function BenefitsSection() {
               <div className="hidden lg:flex lg:col-span-5 flex-col justify-center relative h-[700px]">
                 {activeSpot === null && (
                   <div className="absolute inset-0 flex items-center justify-center text-center opacity-50 z-0 transition-opacity duration-500">
-                    <p className="text-xl">Haz clic en un punto para ver los detalles.</p>
+                    <p className="text-xl">{t.benefits.helpDesktop}</p>
                   </div>
                 )}
                 {benefits.map((spec, index) => {
@@ -185,7 +158,7 @@ export function BenefitsSection() {
                           exit={{ opacity: 0 }}
                           className="text-center p-6 opacity-50"
                         >
-                          <p className="text-sm">Toca un punto para ver los detalles.</p>
+                          <p className="text-sm">{t.benefits.helpMobile}</p>
                         </motion.div>
                       )}
                     </AnimatePresence>
@@ -197,7 +170,7 @@ export function BenefitsSection() {
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img 
                     src="/images/beneficios.svg" 
-                    alt="Mr. Transfer Lab - Beneficios" 
+                    alt={t.benefits.imageAlt} 
                     className="w-full h-full object-contain filter drop-shadow-[0_0_15px_rgba(143,217,196,0.25)]"
                   />
                   {/* Hotspots */}

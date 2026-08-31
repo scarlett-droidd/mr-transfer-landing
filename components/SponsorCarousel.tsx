@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react"
 import Image from "next/image"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { motion, AnimatePresence, useInView } from "framer-motion"
+import { useLanguage } from "@/context/language-context"
 
 export interface SponsorImage {
   url: string
@@ -21,6 +22,7 @@ export function SponsorCarousel({ images }: SponsorCarouselProps) {
 
   const containerRef = useRef<HTMLDivElement>(null)
   const isInView = useInView(containerRef, { once: true, margin: "-100px" })
+  const { t } = useLanguage()
 
   const next = () => {
     setHasInteracted(true)
@@ -153,7 +155,7 @@ export function SponsorCarousel({ images }: SponsorCarouselProps) {
           <button
             onClick={prev}
             className="w-9 h-9 rounded-full bg-black/50 backdrop-blur-sm flex items-center justify-center text-white hover:bg-primary/80 transition-colors"
-            aria-label="Anterior"
+            aria-label={t.sponsorCarousel.prevLabel}
           >
             <ChevronLeft className="w-5 h-5" />
           </button>
@@ -165,7 +167,7 @@ export function SponsorCarousel({ images }: SponsorCarouselProps) {
             animate={shouldNudge ? { x: [0, 6, 0, 6, 0] } : { x: 0 }}
             transition={{ duration: 1.5, ease: "easeInOut", delay: 0.5 }}
             className="w-9 h-9 rounded-full bg-black/50 backdrop-blur-sm flex items-center justify-center text-white hover:bg-primary/80 transition-colors"
-            aria-label="Siguiente"
+            aria-label={t.sponsorCarousel.nextLabel}
           >
             <ChevronRight className="w-5 h-5" />
           </motion.button>
@@ -184,8 +186,7 @@ export function SponsorCarousel({ images }: SponsorCarouselProps) {
 
       {/* Caption / legend */}
       <p className="text-muted-foreground text-sm leading-relaxed italic border-l-2 border-primary/50 pl-4">
-        Mr. Transfer Lab trabaja con un Pro Team de tatuadores referentes en la industria en distintos países,
-        y sigue sumando talento de este calibre para posicionar aún más la marca.
+        {t.sponsorCarousel.caption}
       </p>
     </div>
   )

@@ -1,8 +1,10 @@
 "use client"
 import { useState } from "react"
 import { ArrowRight, MessageCircle } from "lucide-react"
+import { useLanguage } from "@/context/language-context"
 
 export function ContactFormSection() {
+  const { t } = useLanguage()
   const [formData, setFormData] = useState({
     nombre: "",
     empresa: "",
@@ -24,11 +26,7 @@ export function ContactFormSection() {
   const handleWhatsAppClick = () => {
     const numeroWhatsApp = "TU_NUMERO_AQUI" // TODO: reemplazar por el número real
 
-    const mensaje = `Hola, mi nombre es ${formData.nombre || "[nombre]"}${
-      formData.empresa ? ` de ${formData.empresa}` : ""
-    }. Me interesa distribuir MR. Transfer Lab.${
-      formData.detalles ? `\n\nDetalles: ${formData.detalles}` : ""
-    }${formData.email ? `\n\nCorreo: ${formData.email}` : ""}`
+    const mensaje = t.contactForm.whatsappMessage(formData.nombre, formData.empresa, formData.detalles, formData.email)
 
     const texto = encodeURIComponent(mensaje)
     window.open(`https://wa.me/${numeroWhatsApp}?text=${texto}`, "_blank")
@@ -46,17 +44,17 @@ export function ContactFormSection() {
       <div className="max-w-4xl mx-auto relative z-10">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-heading uppercase tracking-wide text-metal-gold mb-6">
-            Conviértete en distribuidor
+            {t.contactForm.title}
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
-            Completa el formulario para solicitar información sobre precios por volumen, catálogo y condiciones de distribución.
+            {t.contactForm.subtitle}
           </p>
         </div>
 
         <form onSubmit={handleSubmit} className="bg-card/50 backdrop-blur-md border border-border/50 rounded-2xl p-8 shadow-2xl max-w-3xl mx-auto space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">
-              <label htmlFor="nombre" className="text-sm font-medium text-foreground/80">Nombre completo</label>
+              <label htmlFor="nombre" className="text-sm font-medium text-foreground/80">{t.contactForm.labels.name}</label>
               <input
                 id="nombre"
                 type="text"
@@ -64,12 +62,12 @@ export function ContactFormSection() {
                 onChange={handleChange("nombre")}
                 required
                 className="w-full bg-background/50 border border-border/50 rounded-xl px-4 py-3 text-foreground focus:outline-none focus:border-metal-gold transition-colors"
-                placeholder="Tu nombre"
+                placeholder={t.contactForm.placeholders.name}
               />
             </div>
             
             <div className="space-y-2">
-              <label htmlFor="empresa" className="text-sm font-medium text-foreground/80">Nombre de la empresa / Tienda</label>
+              <label htmlFor="empresa" className="text-sm font-medium text-foreground/80">{t.contactForm.labels.company}</label>
               <input
                 id="empresa"
                 type="text"
@@ -77,12 +75,12 @@ export function ContactFormSection() {
                 onChange={handleChange("empresa")}
                 required
                 className="w-full bg-background/50 border border-border/50 rounded-xl px-4 py-3 text-foreground focus:outline-none focus:border-metal-gold transition-colors"
-                placeholder="Nombre de tu negocio"
+                placeholder={t.contactForm.placeholders.company}
               />
             </div>
 
             <div className="space-y-2">
-              <label htmlFor="email" className="text-sm font-medium text-foreground/80">Correo electrónico</label>
+              <label htmlFor="email" className="text-sm font-medium text-foreground/80">{t.contactForm.labels.email}</label>
               <input
                 id="email"
                 type="email"
@@ -90,12 +88,12 @@ export function ContactFormSection() {
                 onChange={handleChange("email")}
                 required
                 className="w-full bg-background/50 border border-border/50 rounded-xl px-4 py-3 text-foreground focus:outline-none focus:border-metal-gold transition-colors"
-                placeholder="tu@correo.com"
+                placeholder={t.contactForm.placeholders.email}
               />
             </div>
 
             <div className="space-y-2">
-              <label htmlFor="telefono" className="text-sm font-medium text-foreground/80">Teléfono / WhatsApp</label>
+              <label htmlFor="telefono" className="text-sm font-medium text-foreground/80">{t.contactForm.labels.phone}</label>
               <input
                 id="telefono"
                 type="tel"
@@ -103,20 +101,20 @@ export function ContactFormSection() {
                 onChange={handleChange("telefono")}
                 required
                 className="w-full bg-background/50 border border-border/50 rounded-xl px-4 py-3 text-foreground focus:outline-none focus:border-metal-gold transition-colors"
-                placeholder="+56 9 1234 5678"
+                placeholder={t.contactForm.placeholders.phone}
               />
             </div>
           </div>
 
           <div className="space-y-2">
-            <label htmlFor="detalles" className="text-sm font-medium text-foreground/80">Volumen estimado (Cajas/mes) o Detalles adicionales</label>
+            <label htmlFor="detalles" className="text-sm font-medium text-foreground/80">{t.contactForm.labels.details}</label>
             <textarea
               id="detalles"
               value={formData.detalles}
               onChange={handleChange("detalles")}
               rows={4}
               className="w-full bg-background/50 border border-border/50 rounded-xl px-4 py-3 text-foreground focus:outline-none focus:border-metal-gold transition-colors resize-none"
-              placeholder="Cuéntanos un poco sobre tu operación..."
+              placeholder={t.contactForm.placeholders.details}
             />
           </div>
 
@@ -125,7 +123,7 @@ export function ContactFormSection() {
               type="submit"
               className="flex-1 btn-gold text-[#1C2740] font-bold rounded-xl px-8 py-4 transition-all duration-300 flex items-center justify-center gap-2 hover:scale-[1.02]"
             >
-              Solicitar información <ArrowRight className="w-5 h-5" />
+              {t.contactForm.submitButton} <ArrowRight className="w-5 h-5" />
             </button>
             
             <button
@@ -133,7 +131,7 @@ export function ContactFormSection() {
               onClick={handleWhatsAppClick}
               className="flex-1 relative flex items-center justify-center gap-2 bg-transparent border-2 border-[#C9A86A] text-[#C9A86A] font-bold rounded-xl px-8 py-4 transition-all duration-300 hover:bg-[#C9A86A]/10 hover:scale-[1.02]"
             >
-              <MessageCircle className="w-5 h-5" /> Contactar por WhatsApp
+              <MessageCircle className="w-5 h-5" /> {t.contactForm.whatsappButton}
             </button>
           </div>
         </form>

@@ -3,26 +3,29 @@ import { CheckCircle2 } from "lucide-react"
 import { motion } from "framer-motion"
 import Image from "next/image"
 import LabFrame from "./LabFrame"
+import { useLanguage } from "@/context/language-context"
 
 export function AboutSection() {
+  const { t } = useLanguage()
+
   return (
     <section className="py-24 px-6 relative overflow-hidden">
       <LabFrame className="absolute inset-4 md:inset-8 z-20" />
       <div className="max-w-7xl mx-auto w-full relative z-30">
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div className="bg-[#1C2740]/80 rounded-2xl p-6 md:p-8">
-            <h2 className="text-4xl md:text-5xl font-heading uppercase tracking-wide text-metal-gold mb-6">Sobre Nosotros</h2>
+            <h2 className="text-4xl md:text-5xl font-heading uppercase tracking-wide text-metal-gold mb-6">{t.about.title}</h2>
             <p className="text-muted-foreground text-lg mb-6 leading-relaxed">
-              MR. Transfer Lab nace de años de experiencia dentro de la industria del tatuaje.
+              {t.about.paragraph1}
             </p>
             <p className="text-muted-foreground text-lg mb-6 leading-relaxed font-bold">
-              Después de trabajar junto a algunas de las marcas más reconocidas del mercado, creamos una alternativa enfocada en tres pilares:
+              {t.about.paragraph2}
             </p>
             <ul className="flex flex-col gap-4 mb-8">
               {[
-                "Calidad profesional",
-                "Identidad de marca sólida",
-                "Rentabilidad real para nuestros distribuidores",
+                t.about.check1,
+                t.about.check2,
+                t.about.check3,
               ].map((item, i) => (
                 <motion.li
                   key={i}
@@ -76,14 +79,14 @@ export function AboutSection() {
               ))}
             </ul>
             <p className="text-muted-foreground text-lg leading-relaxed">
-              Estamos construyendo una red global de socios comerciales que crecen junto a nosotros, mientras entregan un producto confiable a los artistas de sus países.
+              {t.about.paragraph3}
             </p>
           </div>
           <div className="flex items-center justify-center min-h-[400px]">
             <div className="animate-float w-full">
               <Image
                 src="/images/sobrenosotros.svg?v=2"
-                alt="Mr. Transfer Lab - Sobre Nosotros"
+                alt={t.about.imageAlt}
                 width={810}
                 height={1012}
                 className="w-full h-auto object-contain scale-[1.4] origin-center"

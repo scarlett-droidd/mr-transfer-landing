@@ -4,9 +4,11 @@ import type React from "react"
 import { useState } from "react"
 import { Menu, X } from "lucide-react"
 import Image from "next/image"
+import { useLanguage } from "@/context/language-context"
 
 export function Header() {
   const [isOpen, setIsOpen] = useState(false)
+  const { t } = useLanguage()
 
   const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
     e.preventDefault()
@@ -50,16 +52,16 @@ export function Header() {
 
           <nav className="hidden md:flex items-center gap-8">
             <a href="#beneficios" onClick={(e) => handleSmoothScroll(e, "beneficios")} className="text-sm font-sans transition-colors cursor-pointer text-muted-foreground hover:text-primary">
-              Beneficios
+              {t.nav.link1}
             </a>
             <a href="#why-distribute" onClick={(e) => handleSmoothScroll(e, "why-distribute")} className="text-sm font-sans transition-colors cursor-pointer text-muted-foreground hover:text-primary">
-              Distribución B2B
+              {t.nav.link2}
             </a>
           </nav>
 
           <div className="hidden md:flex items-center gap-1">
             <a href="#contact" onClick={(e) => handleSmoothScroll(e, "contact")} className="relative flex items-center gap-2 btn-gold font-bold rounded-xl px-5 py-2 transition-all duration-300">
-              <span className="text-sm">Contactar</span>
+              <span className="text-sm">{t.nav.cta}</span>
             </a>
           </div>
 
@@ -74,14 +76,14 @@ export function Header() {
         {isOpen && (
           <nav className="md:hidden mt-6 pb-2 flex flex-col gap-4 border-t border-border pt-6">
             <a href="#beneficios" onClick={(e) => handleSmoothScroll(e, "beneficios")} className="transition-colors cursor-pointer text-muted-foreground hover:text-primary">
-              Beneficios
+              {t.nav.link1}
             </a>
             <a href="#why-distribute" onClick={(e) => handleSmoothScroll(e, "why-distribute")} className="transition-colors cursor-pointer text-muted-foreground hover:text-primary">
-              Distribución B2B
+              {t.nav.link2}
             </a>
             <div className="flex flex-col gap-3 mt-4 pt-4 border-t border-border">
               <a href="#contact" onClick={(e) => handleSmoothScroll(e, "contact")} className="btn-gold font-bold rounded-xl px-5 py-3 text-center w-full transition-all duration-300">
-                Contactar
+                {t.nav.cta}
               </a>
             </div>
           </nav>

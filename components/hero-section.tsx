@@ -3,8 +3,11 @@ import { useEffect, useState } from "react"
 import { AnimatedText } from "./animated-text"
 import LabCircuitBackground from "./LabCircuitBackground"
 import { ArrowRight } from "lucide-react"
+import { useLanguage } from "@/context/language-context"
+import { LanguageSwitch } from "./language-switch"
 
 export function HeroSection() {
+  const { language, t } = useLanguage()
   const [isVisible, setIsVisible] = useState(false)
   const [scrollProgress, setScrollProgress] = useState(0)
 
@@ -88,6 +91,9 @@ export function HeroSection() {
       </div>
 
       <div className="max-w-7xl mx-auto w-full relative z-10">
+        <div className="absolute top-0 right-0 z-30">
+          <LanguageSwitch />
+        </div>
         <div className="text-center mb-12">
           <div
             className={`transition-all duration-1000 delay-[800ms] ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"}`}
@@ -96,11 +102,10 @@ export function HeroSection() {
               <AnimatedText text="The Origin of Every Tattoo" delay={0.3} />
             </h1>
             <p className="text-muted-foreground text-xl md:text-2xl mt-4 font-light max-w-3xl mx-auto mb-8">
-              From Sketch to Skin. Without Mistakes.<br />
-              <span className="text-lg opacity-80 mt-2 block">Del boceto a la piel, sin errores.</span>
+              {t.hero.taglineEn}{language === "es" && t.hero.taglineEs && (<><br /><span className="text-lg opacity-80 mt-2 block">{t.hero.taglineEs}</span></>)}
             </p>
             <a href="#contact" className="px-8 py-4 btn-gold font-semibold rounded-xl transition-colors inline-flex items-center gap-2 cursor-pointer relative z-20">
-              Conviértete en distribuidor <ArrowRight className="w-5 h-5" />
+              {t.hero.cta} <ArrowRight className="w-5 h-5" />
             </a>
           </div>
         </div>
