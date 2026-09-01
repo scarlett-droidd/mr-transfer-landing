@@ -27,4 +27,5 @@ yarn-error.log*
 next-env.d.ts
 
 # misc
-.DS_Store.dev.vars
+.DS_Store
+.dev.vars
